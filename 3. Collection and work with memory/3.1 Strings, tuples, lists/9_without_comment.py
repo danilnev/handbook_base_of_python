@@ -1,8 +1,8 @@
-string = input()
-while string != '':
-    if not string[0] == '#':
-        for i in range(len(string)):
-            if string[i] == '#':
-                print(string[:(i - 1)])
-                break
-    string = input()
+while (string := input()) != '':
+    if string.startswith('#'):
+        continue
+    elif '#' in string:
+        j = string.index('#')
+        print(string[:j])
+    else:
+        print(string)
