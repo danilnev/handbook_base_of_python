@@ -1,12 +1,6 @@
 def cycle(array):
-    global i
-    count = i
-    i += 1
-    if i >= len(array):
-        i = 0
-    numbers = array.copy()
-    numbers.remove(count)
-    return array[count] + cycle(numbers)
+    array.extend(cycle(array))
+    return array
 
 
 i = 0
