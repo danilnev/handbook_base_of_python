@@ -50,15 +50,24 @@ class Rectangle:
         self.second_point.x = self.first_point.x + width
         self.second_point.y = self.first_point.y - height
 
+    def turn(self):
+        point1 = self.first_point.x, self.first_point.y
+        point2 = self.second_point.x, self.second_point.y
+        self.first_point.x = point2[1]
+        self.first_point.y = point2[0]
+        self.second_point.x = point1[1]
+        self.second_point.y = point1[0]
 
-# rect = Rectangle((11, 9), (-9, -6))
-# print(rect.get_size())
-# rect.resize(23, 19)
-# print(rect.get_size())
-# print(rect.get_pos())
-# print(rect.second_point.x, rect.second_point.y)
+    def scale(self, factor):
+        width, height = self.get_size()
+        self.first_point.x -= round(width / factor, 2)
+        self.first_point.y += round(height / factor, 2)
+        self.second_point.x += round(width / factor, 2)
+        self.second_point.y -= round(height / factor, 2)
 
-# rect = Rectangle((3.2, -4.3), (7.52, 3.14))
-# print(rect.get_pos(), rect.get_size())
-# rect.move(1.32, -5)
-# print(rect.get_pos(), rect.get_size())
+
+rect = Rectangle((3.14, 2.71), (-3.14, -2.71))
+print(rect.get_pos(), rect.get_size(), sep='\n')
+rect.scale(2.0)
+print(rect.get_pos(), rect.get_size(), sep='\n')
+
