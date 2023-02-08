@@ -33,20 +33,12 @@ class Fraction:
             return self.denomin
         else:
             self.denomin = args[0]
-            if max_common_divisor(self.numer, self.denomin) != min(self.numer, self.denomin):
-                self.numer //= max_common_divisor(self.numer, self.denomin)
-                self.denomin //= max_common_divisor(self.numer, self.denomin)
+            mcd = max_common_divisor(self.numer, self.denomin)
+            self.numer //= mcd
+            self.denomin //= mcd
 
     def __str__(self):
         return f'{self.numer}/{self.denomin}'
 
     def __repr__(self):
         return f'Fraction({self.numer}, {self.denomin})'
-
-
-frac = Fraction(3, 210)
-print(frac, repr(frac))
-frac.numerator(10)
-print(frac.numerator(), frac.denominator())
-frac.denominator(2)
-print(frac.numerator(), frac.denominator())
