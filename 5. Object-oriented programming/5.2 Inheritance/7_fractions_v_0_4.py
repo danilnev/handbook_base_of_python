@@ -145,13 +145,10 @@ class Fraction:
         return frac3
 
     def __isub__(self, others):
-        if type(others) == int:
-            frac2 = Fraction(others, abs(others))
+        if others._oper == '+':
+            frac2 = Fraction(others.numerator(), others.denominator())
         else:
-            if others._oper == '+':
-                frac2 = Fraction(others.numerator(), others.denominator())
-            else:
-                frac2 = Fraction(-(others.numerator()), others.denominator())
+            frac2 = Fraction(-(others.numerator()), others.denominator())
         mcm = min_common_multiply(self.denominator(), frac2.denominator())
         count1 = mcm // self.denominator()
         count2 = mcm // frac2.denominator()
@@ -170,13 +167,10 @@ class Fraction:
         return self
 
     def __iadd__(self, others):
-        if type(others) == int:
-            frac2 = Fraction(others, abs(others))
+        if others._oper == '+':
+            frac2 = Fraction(others.numerator(), others.denominator())
         else:
-            if others._oper == '+':
-                frac2 = Fraction(others.numerator(), others.denominator())
-            else:
-                frac2 = Fraction(-(others.numerator()), others.denominator())
+            frac2 = Fraction(-(others.numerator()), others.denominator())
         mcm = min_common_multiply(self.denominator(), frac2.denominator())
         count1 = mcm // self.denominator()
         count2 = mcm // frac2.denominator()
@@ -194,5 +188,38 @@ class Fraction:
             self.numerator(self.numerator() - (frac2.numerator()))
         return self
 
+    def __mul__(self, other):
+        if (self._oper == other._oper == '+') or (self._oper == other._oper == '-'):
+            return Fraction(self.numerator() * other.numerator(), self.denominator() * other.denominator())
+        else:
+            return Fraction(-(self.numerator() * other.numerator()), self.denominator() * other.denominator())
 
-# print(Fraction(-1, 3) + Fraction(2, 9))
+    def __truediv__(self, other):
+        if (self._oper == other._oper == '+') or (self._oper == other._oper == '-'):
+            return Fraction(self.numerator() * other.denominator(), self.denominator() * other.numerator())
+        else:
+            return Fraction(-(self.numerator() * other.denominator()), self.denominator() * other.numerator())
+
+    def __imul__(self, other):
+        if (self._oper == other._oper == '+') or (self._oper == other._oper == '-'):
+            self._oper = '+'
+        else:
+            self._oper = '-'
+        self.numerator(self.numerator() * other.numerator())
+        self.denominator(self.denominator() * other.denominator())
+        return self
+
+    def __itruediv__(self, other):
+        if (self._oper == other._oper == '+') or (self._oper == other._oper == '-'):
+            self._oper = '+'
+        else:
+            self._oper = '-'
+        self.numerator(self.numerator() * other.denominator())
+        self.denominator(self.denominator() * other.numerator())
+        return self
+
+    def reverse(self):
+        if self._oper == '+':
+            return Fraction(self.denominator(), self.numerator())
+        else:
+            return Fraction(-self.denominator(), self.numerator())
