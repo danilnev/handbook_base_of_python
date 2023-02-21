@@ -8,3 +8,5 @@ for k in range(1, num // 2 + 2):
                 numbers[i][j] = ' ' * (len(str(num // 2)) - len(str(k))) + str(k)
 for row in numbers:
     print(' '.join(row).lstrip())
+print(len(numbers))
+print(sum([len(x) for x in numbers]) / len(numbers))
