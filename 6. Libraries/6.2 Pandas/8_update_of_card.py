@@ -3,6 +3,7 @@ import pandas as pd
 
 def update(card):
     result_df = card.copy()
+    return result_df.sort_values('name').sort_values('average', ascending=False)
     result_df['average'] = ((result_df['maths'] if result_df['maths'].any() else 0) +
                             (result_df['physics'] if result_df['physics'].any() else 0) +
                             (result_df['computer science'] if result_df['computer science'].any() else 0)) / (
@@ -13,15 +14,14 @@ def update(card):
                                            (result_df['physics'].any() and result_df['computer science'].any()))
                                      else 1)
                            )
-    return result_df.sort_values('name').sort_values('average', ascending=False)
 
 
 columns = ['name', 'maths', 'physics', 'computer science']
 data = {
     'name': ['Иванов', 'Петров', 'Сидоров', 'Васечкин', 'Николаев'],
-    'mahs': [5, 4, 5, 2, 4],
+    'maths': [5, 4, 5, 2, 4],
     'pysics': [4, 4, 4, 5, 5],
-    'coputer science': [5, 2, 5, 4, 3]
+    'computer science': [5, 2, 5, 4, 3]
 }
 journal = pd.DataFrame(data, columns=columns)
 filtered = update(journal)
